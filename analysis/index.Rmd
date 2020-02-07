@@ -8,6 +8,9 @@ editor_options:
   chunk_output_type: console
 ---
 
+```{r setup, include=F}
+library(drake)
+```
 
 
 
