@@ -1,0 +1,6 @@
+suppressPackageStartupMessages(library(tidyverse))
+suppressPackageStartupMessages(library(drake))
+suppressPackageStartupMessages(library(workflowr))
+suppressPackageStartupMessages(library(sf))
+suppressPackageStartupMessages(library(jsonlite))
+suppressPackageStartupMessages(library(here))
