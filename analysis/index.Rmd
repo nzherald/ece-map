@@ -10,7 +10,7 @@ editor_options:
 
 ```{r setup, include=F}
 library(drake)
-readd("site_wfr")
+site_cf <- readd(site_wfr)
 ```
 
 
