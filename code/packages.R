@@ -1,4 +1,6 @@
 suppressPackageStartupMessages(library(tidyverse))
+suppressPackageStartupMessages(library(rvest))
+suppressPackageStartupMessages(library(glue))
 suppressPackageStartupMessages(library(drake))
 suppressPackageStartupMessages(library(workflowr))
 suppressPackageStartupMessages(library(sf))
