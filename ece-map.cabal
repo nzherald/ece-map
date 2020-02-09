@@ -1,0 +1,30 @@
+cabal-version: 1.12
+
+-- This file has been generated from package.yaml by hpack version 0.31.2.
+--
+-- see: https://github.com/sol/hpack
+--
+-- hash: da149a94fdd31af45a4e681d73afd3713177ecc74a86a12fd074510b56ab22ff
+
+name:           ece-map
+version:        0.1.0.0
+category:       Web
+homepage:       https://github.com/githubuser/ece-map#readme
+author:         Author name here
+maintainer:     example@example.com
+copyright:      2020 Author name here
+license:        BSD3
+license-file:   LICENSE
+build-type:     Simple
+extra-source-files:
+    README.md
+
+executable ece-map
+  main-is: Main.hs
+  other-modules:
+      Paths_ece_map
+  hs-source-dirs:
+      src
+  build-depends:
+      base >=4.7 && <5
+  default-language: Haskell2010
