@@ -2,7 +2,7 @@ name:                ece-map
 version:             0.1.0.0
 #synopsis:
 #description:
-homepage:            https://github.com/githubuser/ece-map#readme
+homepage:            https://github.com/vizowl/ece-map#readme
 license:             BSD3
 author:              Author name here
 maintainer:          example@example.com
@@ -13,6 +13,19 @@ extra-source-files:
 
 dependencies:
   - base >= 4.7 && < 5
+  - aeson
+  - bytestring
+  - cassava
+  - directory
+  - filepath
+  - monad-parallel
+  - req
+  - split
+  - scalpel
+  - text
+  - vector
+
+ghc-options:  -Wall -threaded -rtsopts -with-rtsopts=-N
 
 executables:
   ece-map:

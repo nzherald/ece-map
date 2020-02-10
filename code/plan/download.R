@@ -1,11 +1,11 @@
 
 
-download_school <- function(d) {
-  url <- glue("https://www.educationcounts.govt.nz/find-an-els/els/profile-and-contact-details?ece={d$schoolId}")
+school_details <- function(d) {
+  url <- here(glue("data/profiles/{d$schoolId}.html"))
   print(d$name)
   details <- read_html(url) %>% html_node(".profile-details")
   t <- details %>% html_nodes(".title") %>% html_text() %>% str_remove(':')
-  tibble(schoolId=d$schoolId, name=d$name, detail=t,
+  tibble(schoolId=d$schoolId, detail=t,
     value=details %>% html_nodes('dd') %>% html_text() %>% str_trim()
   )
 }
@@ -30,9 +30,17 @@ get_ero_rating <- function(d) {
     text=txt)
 }
 
+
+download_details <- function(details, details_file) {
+    write_csv(details, file_out(details_file))
+    processx::run("/Users/chris.knox/.local/bin/stack", c("exec", "ece-map", "--", file_in(details_file)))
+    details
+}
+
 download_plan <- drake_plan(
     ece_locations = fromJSON("https://www.educationcounts.govt.nz/js-content/ece-geo-data.json?v=0.1.5")$schools,
-    fetch_details = target(download_school(ece_locations), dynamic = map(ece_locations)),
-    ece_reports = target(get_ero_reports(ece_locations), dynamic = map(ece_locations)),
+    write_ece_locations = download_details(ece_locations, here("data/ece_locations.csv")),
+    read_details = target(school_details(write_ece_locations), dynamic = map(write_ece_locations)),
+    # ece_reports = target(get_ero_reports(ece_locations), dynamic = map(ece_locations)),
     #ece_rating = target(get_ero_rating(ece_reports), dynamic = map(ece_reports))
   )

@@ -4,12 +4,12 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: da149a94fdd31af45a4e681d73afd3713177ecc74a86a12fd074510b56ab22ff
+-- hash: a590e397872d1122100eb9e60fbf0a6cea722343b4455ed984a9b576eb69efb9
 
 name:           ece-map
 version:        0.1.0.0
 category:       Web
-homepage:       https://github.com/githubuser/ece-map#readme
+homepage:       https://github.com/vizowl/ece-map#readme
 author:         Author name here
 maintainer:     example@example.com
 copyright:      2020 Author name here
@@ -25,6 +25,18 @@ executable ece-map
       Paths_ece_map
   hs-source-dirs:
       src
+  ghc-options: -Wall -threaded -rtsopts -with-rtsopts=-N
   build-depends:
-      base >=4.7 && <5
+      aeson
+    , base >=4.7 && <5
+    , bytestring
+    , cassava
+    , directory
+    , filepath
+    , monad-parallel
+    , req
+    , scalpel
+    , split
+    , text
+    , vector
   default-language: Haskell2010
