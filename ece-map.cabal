@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: bdce2ef3d2acc4cefca27916b4d2758fa31e5dbb6be266f7da422b212b5a6e62
+-- hash: 17a9772a1450d86c56cd5b19c4382f18c2cb7a10ec65c1929cea7053b9a66569
 
 name:           ece-map
 version:        0.1.0.0
@@ -23,6 +23,7 @@ executable ece-map
   main-is: Main.hs
   other-modules:
       Details
+      EroReports
       Options
       Types
       Paths_ece_map
@@ -36,11 +37,15 @@ executable ece-map
     , cassava
     , directory
     , filepath
+    , megaparsec
     , monad-parallel
     , optparse-applicative
+    , parser-combinators
     , req
     , scalpel
     , split
+    , tagsoup
     , text
+    , time
     , vector
   default-language: Haskell2010

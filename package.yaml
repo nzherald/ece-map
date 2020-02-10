@@ -18,12 +18,16 @@ dependencies:
   - cassava
   - directory
   - filepath
+  - megaparsec
   - monad-parallel
   - optparse-applicative
+  - parser-combinators
   - req
   - split
   - scalpel
+  - tagsoup
   - text
+  - time
   - vector
 
 ghc-options:  -Wall -threaded -rtsopts -with-rtsopts=-N
