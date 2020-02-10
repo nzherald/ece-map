@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: a590e397872d1122100eb9e60fbf0a6cea722343b4455ed984a9b576eb69efb9
+-- hash: bdce2ef3d2acc4cefca27916b4d2758fa31e5dbb6be266f7da422b212b5a6e62
 
 name:           ece-map
 version:        0.1.0.0
@@ -22,6 +22,9 @@ extra-source-files:
 executable ece-map
   main-is: Main.hs
   other-modules:
+      Details
+      Options
+      Types
       Paths_ece_map
   hs-source-dirs:
       src
@@ -34,6 +37,7 @@ executable ece-map
     , directory
     , filepath
     , monad-parallel
+    , optparse-applicative
     , req
     , scalpel
     , split

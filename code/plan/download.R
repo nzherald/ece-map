@@ -33,7 +33,7 @@ get_ero_rating <- function(d) {
 
 download_details <- function(details, details_file) {
     write_csv(details, file_out(details_file))
-    processx::run("/Users/chris.knox/.local/bin/stack", c("exec", "ece-map", "--", file_in(details_file)))
+    processx::run("/Users/chris.knox/.local/bin/stack", c("exec", "ece-map", "--", details file_in(details_file)))
     details
 }
 
