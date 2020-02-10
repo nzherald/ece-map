@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 17a9772a1450d86c56cd5b19c4382f18c2cb7a10ec65c1929cea7053b9a66569
+-- hash: d0c54d1ddb0fc0f3f3721151c15501cc93c0887e6515d64f6b46f0874b2b1741
 
 name:           ece-map
 version:        0.1.0.0
@@ -22,6 +22,7 @@ extra-source-files:
 executable ece-map
   main-is: Main.hs
   other-modules:
+      Common
       Details
       EroReports
       Options

@@ -3,25 +3,17 @@ module Details where
 
 
 import qualified Data.ByteString.Lazy as BL
-import qualified Data.Csv as Csv
-import qualified Data.Vector as V
 import Control.Monad.IO.Class
 import Network.HTTP.Req
-import Control.Monad
 import qualified Control.Monad.Parallel as P
 import System.FilePath
 import System.Directory
-import Data.List.Split
 
 import Types
+import Common
 
 details :: FilePath -> IO ()
-details fp = do
-  csvData <- BL.readFile fp
-  case Csv.decode Csv.HasHeader csvData of
-        Left err -> putStrLn err
-        Right v -> forM_ (chunksOf 4 $ V.toList v) (fetchSchools)
-
+details = schools fetchSchools 4
 
 fetchSchools :: [School] -> IO ()
 fetchSchools s = do
