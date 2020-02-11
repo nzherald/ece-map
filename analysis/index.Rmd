@@ -9,10 +9,14 @@ editor_options:
 ---
 
 ```{r setup, include=F}
-library(drake)
-site_cf <- readd(site_wfr)
+source(here::here("code/packages.R"))
+drv <- dbDriver("PostgreSQL")
+con <- dbConnect(drv, dbname="ece", host="localhost")
 ```
 
 
+```{psql, connection=con}
+SELECT 1+1;
 
-Welcome to my research website.
+```
+
