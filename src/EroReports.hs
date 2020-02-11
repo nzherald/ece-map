@@ -7,7 +7,7 @@ import qualified Data.Csv as Csv
 import Text.Megaparsec
 import Text.Megaparsec.Char
 import Data.Text (Text)
-import Data.Text.Encoding (decodeUtf8, encodeUtf8)
+import Data.Text.Encoding (decodeUtf8', encodeUtf8)
 import Data.Void
 import Data.List
 import Data.Maybe
@@ -48,7 +48,9 @@ tagLink = chroots ("article" // "a") $ do
 
 extract :: BS.ByteString -> [Text]
 extract v = do
-   maybe [] nub $ scrape tagLink $ parseTags $ decodeUtf8 v
+  case decodeUtf8' v of
+    Left _ -> [] -- for now just skip decode errors - if there are a lot of them I'll figure out a better strategy
+    Right vv -> maybe [] nub $ scrape tagLink $ parseTags vv
 
 extractDate :: Text -> Maybe Day
 extractDate = parseMaybe (skipSomeTill printChar parseDay <* printChar)
@@ -62,7 +64,7 @@ get (School sch_id _ _ _ n _ _) = do
      print $ n <> " exists"
   else
     runReq defaultHttpConfig $ do
-        r <- req GET (https "www.ero.govt.nz" /: "report-view") (NoReqBody) bsResponse (queryParam "id" (pure sch_id))
+        r <- req GET (https "www.ero.govt.nz" /: "report-view") (NoReqBody) bsResponse (queryParam "id" (pure sch_id) <> nzhScraper)
         let bdy = responseBody r :: BS.ByteString
             links = map (\l -> "https://www.ero.govt.nz" <> l) $ extract bdy
             dates = map show $ catMaybes $ map extractDate links
@@ -80,12 +82,8 @@ get (School sch_id _ _ _ n _ _) = do
             Nothing -> liftIO $ print $ "could not decode " <> l
             Just (url, _) -> do
               let fo = "data" </> "reports" </> sch_id ++ "-" ++ d -<.> "html"
-              rep <- req GET url NoReqBody bsResponse mempty
+              rep <- req GET url NoReqBody bsResponse nzhScraper
               liftIO $ BS.writeFile fo (responseBody rep)
 
 
 
-data ReportLink = 
-  ReportDate Day
-  ReportLink Text
-  deriving (Show, Eq)

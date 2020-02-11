@@ -1,3 +1,4 @@
+{-# LANGUAGE OverloadedStrings #-}
 module Common where
 
 
@@ -6,6 +7,7 @@ import qualified Data.Csv as Csv
 import qualified Data.Vector as V
 import Control.Monad
 import Data.List.Split
+import Network.HTTP.Req
 
 schools :: Csv.FromRecord e => ([e] -> IO b) -> Int -> FilePath -> IO ()
 schools opp chunkSize fp = do
@@ -13,3 +15,6 @@ schools opp chunkSize fp = do
   case Csv.decode Csv.HasHeader csvData of
         Left err -> putStrLn err
         Right v -> forM_ (chunksOf chunkSize $ V.toList v) opp
+
+nzhScraper :: Option scheme
+nzhScraper = header "User-Agent" "New Zealand Herald Data Journalism - We try to be polite and careful with our scraping - if we do cause a problem please contact chris.knox@nzherald.co.nz"

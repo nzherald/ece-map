@@ -58,6 +58,13 @@
       "Repository": "CRAN",
       "Hash": "e031418365a7f7a766181ab5a41a5716"
     },
+    "RPostgreSQL": {
+      "Package": "RPostgreSQL",
+      "Version": "0.6-2",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "82cb7737c081ed6b5e528a37f536d864"
+    },
     "Rcpp": {
       "Package": "Rcpp",
       "Version": "1.0.3",
@@ -232,6 +239,13 @@
       "Source": "Repository",
       "Repository": "CRAN",
       "Hash": "dad6793a5a1f73c8e91f1a1e3e834b05"
+    },
+    "fastdigest": {
+      "Package": "fastdigest",
+      "Version": "0.6-3",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "9340d16db406dc224f90875b0e94eaea"
     },
     "filelock": {
       "Package": "filelock",
@@ -501,10 +515,10 @@
     },
     "processx": {
       "Package": "processx",
-      "Version": "3.4.1",
+      "Version": "3.4.2",
       "Source": "Repository",
       "Repository": "CRAN",
-      "Hash": "3fcec01e55910997ae663883cc66a989"
+      "Hash": "20a082f2bde0ffcd8755779fd476a274"
     },
     "progress": {
       "Package": "progress",
@@ -627,10 +641,15 @@
     },
     "sf": {
       "Package": "sf",
-      "Version": "0.8-1",
-      "Source": "Repository",
-      "Repository": "CRAN",
-      "Hash": "250c1c903919bf0b6509663d66787be0"
+      "Version": "0.8-2",
+      "Source": "GitHub",
+      "RemoteType": "github",
+      "RemoteHost": "api.github.com",
+      "RemoteUsername": "r-spatial",
+      "RemoteRepo": "sf",
+      "RemoteRef": "master",
+      "RemoteSha": "30a5c1d537b261d37fe9a4aae9b684200a1c3d03",
+      "Hash": "3d9a5a991e2477b3afc27093e557f91f"
     },
     "storr": {
       "Package": "storr",

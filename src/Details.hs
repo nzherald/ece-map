@@ -33,7 +33,7 @@ fetchSchool (School sch_id _ _ _ n _ _) = do
       (https "www.educationcounts.govt.nz" /: "find-an-els" /: "els" /: "profile-and-contact-details") -- safe by construction URL
       (NoReqBody)
       lbsResponse -- specify how to interpret response
-      (queryParam "ece" (pure sch_id))
+      (queryParam "ece" (pure sch_id) <> nzhScraper)
     liftIO $ do
       BL.writeFile p (responseBody r)
       print $ n <> " fetched"
