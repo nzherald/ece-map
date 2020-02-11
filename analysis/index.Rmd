@@ -8,15 +8,5 @@ editor_options:
   chunk_output_type: console
 ---
 
-```{r setup, include=F}
-source(here::here("code/packages.R"))
-drv <- dbDriver("PostgreSQL")
-con <- dbConnect(drv, dbname="ece", host="localhost")
-```
-
-
-```{psql, connection=con}
-SELECT 1+1;
-
 ```
 
