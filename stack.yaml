@@ -39,7 +39,15 @@ packages:
 # - git: https://github.com/commercialhaskell/stack.git
 #   commit: e7b331f14bcffb8367cd58fbfc8b40ec7642100a
 #
-# extra-deps: []
+# extra-deps:
+# - Frames-0.6.4@sha256:0a7240bf4f125291bde7ceccee2079fe455b11595ceaf2e567bf9bb388625379,8897
+# - vinyl-0.12.2@sha256:cefc269fd137841861c13f28a3f20f5973ef24e9f1e6245b77b688f1cbd979de,3717
+# - discrimination-0.4@sha256:d42ae36c97ea9c0c8844b47ee162c5530f3daf708636f01010f58dcf52602876,2571
+# - Frames-dsv-0.1.2@sha256:371be8600684836fa75c5e390357ee890bf4858e07ce18f84043c40b4f0e8072,1671
+# - hw-dsv-0.4.1.0@sha256:8789bfa9f36684b997908bc2878ae31a73b58674c444be2af293908a2bde0df6,11112
+# - hw-ip-2.4.2.0@sha256:faab727f94ee34bcc5661ce5fa22f6c0a18b24dc7cbea573f7709f1da8872a45,6029
+# - hw-rankselect-0.13.4.0@sha256:bfb06d8c8b06efa1338f8b8b98a2c6ae5cbf72f72031974b4f160fbd7308e70e,9560
+# - hw-simd-0.1.2.0@sha256:a488ed2509c590fd7468c6bbf9ebbc55633456519c87838067f621871d16d297,7816
 
 # Override default flag values for local packages and extra-deps
 # flags: {}

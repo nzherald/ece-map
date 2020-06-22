@@ -1,12 +1,12 @@
-name:                ece-map
+name:                nzh
 version:             0.1.0.0
 #synopsis:
 #description:
-homepage:            https://github.com/vizowl/ece-map#readme
+homepage:            https://github.com/nzherald/ece-map#readme
 license:             BSD3
-author:              Author name here
-maintainer:          example@example.com
-copyright:           2020 Author name here
+author:              Chris Knox
+maintainer:          chris.knox@nzherald.co.nz
+copyright:           2020 NZ Herald 
 category:            Web
 extra-source-files:
 - README.md
@@ -16,8 +16,10 @@ dependencies:
   - aeson
   - bytestring
   - cassava
+  - cases
   - directory
   - filepath
+  - foldl
   - megaparsec
   - modern-uri
   - monad-parallel
@@ -26,14 +28,21 @@ dependencies:
   - req
   - split
   - scalpel
+  - shake
   - tagsoup
   - text
   - time
+  - unordered-containers
   - vector
 
-ghc-options:  -Wall -threaded -rtsopts -with-rtsopts=-N
+
+library:
+  source-dirs: src
 
 executables:
-  ece-map:
-    source-dirs:      src
-    main:             Main.hs
+  nzh:
+    # ghc-options:  -Wall -threaded -rtsopts -with-rtsopts=-N
+    source-dirs:      .
+    main:             Shakefile.hs
+    dependencies:
+      - nzh

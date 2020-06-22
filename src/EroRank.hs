@@ -1,69 +1,40 @@
-{-# LANGUAGE OverloadedStrings #-}
-{-# LANGUAGE ScopedTypeVariables  #-}
-{-# LANGUAGE DeriveGeneric #-}
-{-# LANGUAGE DeriveAnyClass #-}
+{-# LANGUAGE DeriveAnyClass      #-}
+{-# LANGUAGE DeriveGeneric       #-}
+{-# LANGUAGE DerivingVia         #-}
+{-# LANGUAGE NamedFieldPuns      #-}
+{-# LANGUAGE OverloadedStrings   #-}
+{-# LANGUAGE ScopedTypeVariables #-}
+
 module EroRank (ranks) where
 
-import qualified Data.ByteString.Lazy as BL
-import qualified Data.Csv as Csv
-import qualified Data.Vector as V
-import qualified Data.Text.IO as T
-import qualified Data.Text as T
-import Data.Text (Text)
-import System.FilePath
 import qualified Control.Monad.Parallel as P
-import GHC.Generics
+import qualified Data.ByteString.Lazy   as BL
+import qualified Data.Csv               as Csv
+import           Data.Text              (Text)
+import qualified Data.Text              as T
+import qualified Data.Text.IO           as T
+import qualified Data.Vector            as V
+import           GHC.Generics
+import           System.FilePath
 
-import Types
-import Common
-
-
-data Missing
-  = Report
-  | Summary
-  deriving (Show, Eq, Generic, Csv.ToField)
-
-
-data Ranking
-  = VeryWellPlaced
-  | WellPlaced
-  | FurtherDevelopment
-  | NotWellPlaced
-  | NoRating
-  | Problem Missing
-  deriving (Show, Eq, Generic, Csv.ToField)
+import           Common
+import           Types
 
 
-data Ranked = Ranked
-  { rankedName :: String
-  , rankedId :: Text
-  , rankedRank :: Ranking
-  } deriving (Show, Eq, Generic, Csv.ToRecord)
 
-instance Csv.ToRecord Ranking where
-    toRecord r = Csv.record [ ]
+ranks :: FilePath -> FilePath -> IO ()
+ranks outfile fp = do
+  (Right (_, sch)) <- Csv.decodeByName <$> BL.readFile fp
+  r <- mapM readRating (V.toList sch)
+  BL.writeFile "data/ranked-schools.csv" $ Csv.encodeDefaultOrderedByName r
 
 
-ranks :: FilePath -> IO ()
-ranks fp = do
-  sch <- schools fp
-  r <- P.mapM recent sch
-  BL.writeFile "data/ranked-schools.csv" $ Csv.encode $ map (\((School n i _ _), rnk) -> Ranked n i rnk) $ zip sch r
 
-recent :: School -> IO Ranking
-recent (School id_ _ _ _) = do
-  raw <- BL.readFile $ "data" </> "reports" </> id_ -<.> "csv"
-  case Csv.decode Csv.NoHeader raw of
-    Left e -> error e
-    Right (d::V.Vector (String,Text)) -> case V.toList d of
-                                         [] -> pure $ Problem Report
-                                         h:_ -> readRating id_ $ fst h
-
-
-readRating :: String -> String -> IO Ranking
-readRating id_ s = do
-  htmlstr <- T.readFile $ "data" </> "reports" </> (id_ ++ "-" ++ s) -<.> "html"
-  pure $ if T.isInfixOf "<b>Very well placed</b>" htmlstr || T.isInfixOf "<strong>Very well placed</strong>" htmlstr
+readRating :: ReportLink -> IO Ranked
+readRating (ReportLink id_ s _) = do
+  print $ id_ ++ " " ++ s
+  htmlstr <- T.readFile $ "data" </> "reports" </> id_ </> s -<.> "html"
+  let rank = if T.isInfixOf "<b>Very well placed</b>" htmlstr || T.isInfixOf "<strong>Very well placed</strong>" htmlstr
             then VeryWellPlaced
             else if T.isInfixOf "<b>Well placed</b>" htmlstr || T.isInfixOf "<strong>Well placed</strong>" htmlstr
             then WellPlaced
@@ -72,6 +43,7 @@ readRating id_ s = do
             else if T.isInfixOf "<b>Not well placed</b>" htmlstr || T.isInfixOf "<strong>Not well placed</strong>" htmlstr
             then NotWellPlaced
             else NoRating
+  pure $ Ranked id_ s rank
 
 
 
