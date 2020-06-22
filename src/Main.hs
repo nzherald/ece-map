@@ -7,14 +7,15 @@ import Options.Applicative
 
 import Details
 import EroReports
+import EroRank
 
 
 opts :: Parser (IO ())
 opts = subparser
   ( command "details" (info (details <$> option str ( long "file" <> short 'f' )) idm)
-  <> command "ero"  (info (reports <$> option str ( long "file" <> short 'f' )) idm))
+  <> command "ero"  (info (reports <$> option str ( long "file" <> short 'f' )) idm)
+  <> command "erorank"  (info (ranks <$> option str ( long "file" <> short 'f' )) idm)
+  )
 
 main :: IO ()
 main = join $ execParser (info opts idm)
-
-

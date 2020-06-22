@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: d0c54d1ddb0fc0f3f3721151c15501cc93c0887e6515d64f6b46f0874b2b1741
+-- hash: e0814e22ff40d826e6550f14be4a9b429ae984c6fccd459c604ce9a34dab6f1e
 
 name:           ece-map
 version:        0.1.0.0
@@ -24,6 +24,7 @@ executable ece-map
   other-modules:
       Common
       Details
+      EroRank
       EroReports
       Options
       Types
@@ -39,6 +40,7 @@ executable ece-map
     , directory
     , filepath
     , megaparsec
+    , modern-uri
     , monad-parallel
     , optparse-applicative
     , parser-combinators

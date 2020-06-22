@@ -20,21 +20,42 @@ get_ero_rating <- function(d) {
 }
 
 
-download_details <- function(details, details_file) {
-    write_csv(details, file_out(details_file))
+download_reports <- function(details, details_file) {
     processx::run("/Users/chris.knox/.local/bin/stack", c("exec", "ece-map", "--", "details", "-f", file_in(details_file)))
     details
 }
 
 download_plan <- drake_plan(
-    ece_locations = fromJSON("https://www.educationcounts.govt.nz/js-content/ece-geo-data.json?v=0.1.5")$schools,
-    write_ece_locations = download_details(ece_locations, here("data/ece_locations.csv")),
-    ece_details = target(school_details(write_ece_locations), dynamic = map(write_ece_locations)),
-    ece = ece_details %>% 
-      filter(detail %in% c("Maximum children", "Maximum under 2 year olds")) %>%
-      pivot_wider(names_from = detail, values_from = value) %>%
-      inner_join(ece_locations, by="schoolId") %>%
-      st_as_sf(coords = c("longitude", "latitude")) %>%
+    ece_directory = read_csv(here("data/Directory-ECE-Current.csv"), skip=10,
+      locale = locale(encoding = 'ISO-8859-1'),
+      col_types = cols(
+        .default = col_character(),
+        `Community of Learning: ID` = col_double(),
+        Longitude = col_double(),
+        Latitude = col_double(),
+        `All Children` = col_double(),
+        `Under 2's` = col_double(),
+        `Age 0` = col_double(),
+        `Age 1` = col_double(),
+        `Age 2` = col_double(),
+        `Age 3` = col_double(),
+        `Age 4` = col_double(),
+        `Age 5` = col_double(),
+        `Total Roll` = col_double(),
+        Maori = col_double(),
+        Pacific = col_double(),
+        `Asian*` = col_double(),
+        `European Pakeha*` = col_double(),
+        `Other*` = col_double()
+    )) %>% rename_all(make.names),
+    ece_locations = ece_directory %>% 
+      select(schoolId=Number,name=Name,latitude=Latitude,longitude=Longitude),
+    ece_locations_write = write_csv(ece_locations, file_out(here("data/ece_locations.csv")), na=""),
+    ece_reports = processx::run("/Users/chris.knox/.local/bin/stack",
+      c("exec", "ece-map", "--", "ero", "-f", file_in(here("data/ece_locations.csv")))),
+    ece = ece_directory %>% 
+      filter(!is.na(Latitude), !is.na(Longitude)) %>% 
+      st_as_sf(coords = c("Longitude", "Latitude")) %>%
       st_write("PG:dbname=ece", "ece", layer_options="OVERWRITE=true") %>%
       fastdigest()
       

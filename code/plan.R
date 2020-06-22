@@ -2,8 +2,6 @@ source(here("code/plan/download.R"))
 source(here("code/plan/gis.R"))
 
 
-
-
 pages_plan <- drake_plan(
   index_wfr = wflow_publish(
     files=c(

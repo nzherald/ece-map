@@ -1,7 +1,6 @@
 module Options where
 
 import Options.Applicative
-import Data.Semigroup ((<>))
 
 data Input
   = FileInput FilePath
@@ -27,6 +26,3 @@ opts = info (input <**> helper)
   ( fullDesc
   <> progDesc "Print a greeting for TARGET"
   <> header "hello - a test for optparse-applicative" )
-
-
-

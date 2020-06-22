@@ -9,12 +9,9 @@ import GHC.Generics
 import Data.Text
 
 
-data School = School 
+data School = School
   { schoolId :: String
-  , regionId :: Text
-  , districtId :: Text
-  , cauId :: Text
   , name :: Text
-  , latitude :: Double
-  , longitude :: Double
+  , latitude :: Maybe Double
+  , longitude :: Maybe Double
   } deriving (Show, Eq, Generic, FromRecord)

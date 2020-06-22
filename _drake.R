@@ -4,4 +4,4 @@ source(here("code/plan.R"))
 options(clustermq.scheduler = "multicore") # optional parallel computing
 
 # drake_config(plan, verbose = 2, max_expand = 2)
-drake_config(plan, verbose = 2)
+drake_config(plan, verbose = 1)

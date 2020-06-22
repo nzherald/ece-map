@@ -13,7 +13,7 @@ import Types
 import Common
 
 details :: FilePath -> IO ()
-details = schools fetchSchools 4
+details = chunkedSchools fetchSchools 4
 
 fetchSchools :: [School] -> IO ()
 fetchSchools s = do
@@ -21,10 +21,10 @@ fetchSchools s = do
 
 
 fetchSchool :: School -> IO ()
-fetchSchool (School sch_id _ _ _ n _ _) = do
+fetchSchool (School sch_id n _ _) = do
   let p = "data" </> "profiles" </> sch_id -<.> "html"
   exists <- doesFileExist p
-  if exists 
+  if exists
   then
      print $ n <> " exists"
   else
@@ -37,4 +37,3 @@ fetchSchool (School sch_id _ _ _ n _ _) = do
     liftIO $ do
       BL.writeFile p (responseBody r)
       print $ n <> " fetched"
-

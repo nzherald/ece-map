@@ -4,10 +4,11 @@ module EroReports (reports) where
 import qualified Data.ByteString as BS
 import qualified Data.ByteString.Lazy as BL
 import qualified Data.Csv as Csv
+import Text.URI
 import Text.Megaparsec
 import Text.Megaparsec.Char
 import Data.Text (Text)
-import Data.Text.Encoding (decodeUtf8', encodeUtf8)
+import Data.Text.Encoding (decodeUtf8')
 import Data.Void
 import Data.List
 import Data.Maybe
@@ -27,8 +28,8 @@ type Parser = Parsec Void Text
 
 
 reports :: FilePath -> IO ()
-reports = schools getSchools 4
-  where 
+reports = chunkedSchools getSchools 4
+  where
     getSchools s = forM_ s get
 
 parseDay :: Parser Day
@@ -56,10 +57,10 @@ extractDate :: Text -> Maybe Day
 extractDate = parseMaybe (skipSomeTill printChar parseDay <* printChar)
 
 get :: School -> IO ()
-get (School sch_id _ _ _ n _ _) = do
+get (School sch_id n _ _) = do
   let p = "data" </> "reports" </> sch_id -<.> "html"
   exists <- doesFileExist p
-  if exists 
+  if exists
   then
      print $ n <> " exists"
   else
@@ -77,13 +78,14 @@ get (School sch_id _ _ _ n _ _) = do
           print $ n <> " fetched"
           BL.writeFile (p -<.> "csv") (Csv.encode $ reverse $ sortOn fst summary)
       where
+        fetchReport :: (FilePath, Text) -> Req ()
         fetchReport (d, l)  = do
-          case parseUrlHttps $ encodeUtf8  l of
+          let p = parser <* eof :: Parsec Void Text URI
+          case parseMaybe p l of
             Nothing -> liftIO $ print $ "could not decode " <> l
-            Just (url, _) -> do
-              let fo = "data" </> "reports" </> sch_id ++ "-" ++ d -<.> "html"
-              rep <- req GET url NoReqBody bsResponse nzhScraper
-              liftIO $ BS.writeFile fo (responseBody rep)
-
-
-
+            Just uri ->
+                      do
+                        let fo = "data" </> "reports" </> sch_id ++ "-" ++ d -<.> "html"
+                            (Just (url, _)) = useHttpsURI uri
+                        rep <- req GET url NoReqBody bsResponse nzhScraper
+                        liftIO $ BS.writeFile fo (responseBody rep)

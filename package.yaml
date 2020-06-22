@@ -19,6 +19,7 @@ dependencies:
   - directory
   - filepath
   - megaparsec
+  - modern-uri
   - monad-parallel
   - optparse-applicative
   - parser-combinators
