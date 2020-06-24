@@ -52,7 +52,7 @@ extractDate = parseMaybe (skipSomeTill printChar parseDay <* printChar)
 
 reportListPage :: String -> IO ()
 reportListPage schoolNumber = do
-  let p = "data" </> "reports" </> schoolNumber -<.> "html"
+  let p = "data" </> "reports" </> "lists" </> schoolNumber -<.> "html"
   exists <- doesFileExist p
   if exists
      then pure ()

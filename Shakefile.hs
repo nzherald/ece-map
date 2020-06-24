@@ -13,7 +13,7 @@ import           Lib
 main :: IO ()
 main = do
     allSchools <- getSchools
-    let schoolEroPages = ["data" </> "reports" </> schoolNumber <.> "html" | School { schoolNumber } <- allSchools ]
+    let schoolEroPages = ["data" </> "reports" </> "lists" </> schoolNumber <.> "html" | School { schoolNumber } <- allSchools ]
 
     shakeArgs shakeOptions { shakeFiles = ".build" } $ do
         want ["data/ranked-schools.csv"]
@@ -44,12 +44,12 @@ main = do
             need schoolEroPages
             liftIO $ allReports o schoolEroPages
 
-        "data/reports/*.html" %> \o -> do
+        priority 2 $ "data/reports/lists/*.html" %> \o -> do
             let sn = takeBaseName o
             putInfo $ "downloading " ++ sn
             liftIO $ reportListPage sn
 
-        "data/reports/**/*.html" %> \o -> do
+        priority 1 $ "data/reports/**/*.html" %> \o -> do
             putInfo $ "downloading " ++ o
             liftIO $ report o
 
