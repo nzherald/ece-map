@@ -48,7 +48,7 @@ tagLink = chroots ("article" // "a") $ do
 
 
 extractDate :: Text -> Maybe Day
-extractDate = parseMaybe (skipSomeTill printChar parseDay <* printChar)
+extractDate = parseMaybe parseDay -- (skipSomeTill printChar parseDay <* printChar)
 
 reportListPage :: String -> IO ()
 reportListPage schoolNumber = do
@@ -70,7 +70,7 @@ allReports outfile files = do
     go fp = do
       bdy <- T.readFile fp
       let links = map (\l -> "https://www.ero.govt.nz" <> l) $ maybe [] nub $ scrape tagLink $ parseTags bdy
-          dates = map show $ catMaybes $ map extractDate links
+          dates = map show $ catMaybes $ map (extractDate . T.takeEnd 10 . T.replace "/" "") links
           sn = takeBaseName fp
       pure $ map (\(d,l) -> ReportLink sn d l) $ zip dates links
 
@@ -94,6 +94,7 @@ report fn = do
                       Just uri ->
                         do
                           let (Just (url, _)) = useHttpsURI uri
+                          liftIO $ print url
                           rep <- req GET url NoReqBody bsResponse nzhScraper
                           pure (responseBody rep)
             T.writeFile fn ((T.decodeUtf8With (\_ _ -> Nothing)) bdy)
