@@ -1,0 +1,177 @@
+@font-face{
+    font-family:Source Sans Pro Bold;
+    font-weight:400;
+    font-style:normal;
+    src:url(//www.nzherald.co.nz/pb/resources/fonts/source-sans-pro/SourceSansPro-Bold.otf)
+}
+@font-face{
+    font-family:Source Sans Pro Semibold;
+    font-weight:400;
+    font-style:normal;
+    src:url(//www.nzherald.co.nz/pb/resources/fonts/source-sans-pro/SourceSansPro-Semibold.otf)
+}
+@font-face{
+    font-family:Source Sans Pro Italic;
+    font-weight:400;
+    font-style:normal;
+    src:url(//www.nzherald.co.nz/pb/resources/fonts/source-sans-pro/SourceSansPro-It.otf)
+}
+@font-face{
+    font-family:Source Sans Pro Light;
+    font-weight:400;
+    font-style:normal;
+    src:url(//www.nzherald.co.nz/pb/resources/fonts/source-sans-pro/SourceSansPro-Light.otf)
+}
+@font-face{
+    font-family:Source Sans Pro;
+    font-weight:400;
+    font-style:normal;
+    src:url(//www.nzherald.co.nz/pb/resources/fonts/source-sans-pro/SourceSansPro-Regular.otf)
+}
+@font-face{
+    font-family:Stag Bold;
+    font-weight:400;
+    font-style:normal;
+    src:url(//www.nzherald.co.nz/pb/resources/fonts/stag/Stag-Bold.otf)
+}
+@font-face{
+    font-family:Stag Book;
+    font-weight:400;
+    font-style:normal;
+    src:url(//www.nzherald.co.nz/pb/resources/fonts/stag/Stag-Book.otf)
+}
+@font-face{
+    font-family:Stag Light;
+    font-weight:400;
+    font-style:normal;
+    src:url(//www.nzherald.co.nz/pb/resources/fonts/stag/Stag-Light.otf)
+}
+@font-face{
+    font-family:Stag Light Italic;
+    font-weight:400;
+    font-style:normal;
+    src:url(//www.nzherald.co.nz/pb/resources/fonts/stag/Stag-LightItalic.otf)
+}
+@font-face{
+    font-family:Stag Medium;
+    font-weight:400;
+    font-style:normal;
+    src:url(//www.nzherald.co.nz/pb/resources/fonts/stag/Stag-Medium.otf)
+}
+@font-face{
+    font-family:Stag Sans Bold;
+    font-weight:400;
+    font-style:normal;
+    src:url(//www.nzherald.co.nz/pb/resources/fonts/stag-sans/StagSans-Bold.otf)
+}
+@font-face{
+    font-family:Stag Sans Book;
+    font-weight:400;
+    font-style:normal;
+    src:url(//www.nzherald.co.nz/pb/resources/fonts/stag-sans/StagSans-Book.otf)
+}
+@font-face{
+    font-family:Stag Sans Light;
+    font-weight:400;
+    font-style:normal;
+    src:url(//www.nzherald.co.nz/pb/resources/fonts/stag-sans/StagSans-Light.otf)
+}
+@font-face{
+    font-family:Stag Sans Medium;
+    font-weight:400;
+    font-style:normal;
+    src:url(//www.nzherald.co.nz/pb/resources/fonts/stag-sans/StagSans-Medium.otf)
+}
+
+@whiteish: #F3F1F2;
+@lightdark: #C8CCCF;
+@darkish: #666;
+@dark: #4c585d;
+
+.titlefont {
+    font-family: "Stag Book", Georgia, serif;
+    font-weight: normal;
+}
+.basefont {
+    font-family: "Source Sans Pro Light", "Helvetica", sans-serif;
+}
+
+
+
+.articlestory {
+    .nav-collapsible {
+        #pb-root {
+            overflow: visible;
+        }
+    }
+}
+
+.nzh-datavis {
+    .basefont;
+    position: relative;
+    width: 100%;
+    max-width: 940px;
+    min-height: 320px;
+    @media (max-width: 500px) {
+        min-height: 160px;
+    }
+    margin: auto;
+    font-size: 18px;
+
+    // Mobile/Desktop
+    .mobile {
+        display: none;
+    }
+    @media (max-width: 800px) {
+        font-size: 16px;
+        .desktop {
+            display: none;
+        }
+        .mobile {
+            display: inherit;
+        }
+    }
+
+    // Overwrite base styles
+    h1,h2,h3,h4,h5,label {
+        .titlefont;
+        margin: 0.8em auto 0.2em auto;
+        color: @dark;
+    }
+    select {
+        .basefont;
+        padding: 0.25em 0.5em;
+        background-color: #fff;
+        border: @lightdark 1px solid;
+        color: @dark;
+        font-weight: bold;
+        &.disabled {
+            appearance: none;
+            -webkit-appearance: none;
+            border-style: hidden !important;
+            padding: 0 !important;
+        }
+    }
+    button {
+        padding: 0.4em 8em;
+        border: @lightdark 1px solid;
+        background-color: #fff;
+    }
+    .row {
+        margin-left: unset;
+        margin-right: unset;
+    }
+
+    svg {
+        overflow: visible;
+        text {
+            .basefont;
+        }
+        path {
+            fill: none;
+        }
+        .axis {
+            user-select: none;
+        }
+    }
+}
