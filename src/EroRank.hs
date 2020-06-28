@@ -31,7 +31,7 @@ ranks outfile fp = do
 
 
 readRating :: ReportLink -> IO Ranked
-readRating (ReportLink id_ s _) = do
+readRating (ReportLink id_ s u) = do
   print $ id_ ++ " " ++ s
   htmlstr <- T.readFile $ "data" </> "reports" </> id_ </> s -<.> "html"
   let rank = if T.isInfixOf "<b>Very well placed</b>" htmlstr || T.isInfixOf "<strong>Very well placed</strong>" htmlstr
@@ -43,7 +43,7 @@ readRating (ReportLink id_ s _) = do
             else if T.isInfixOf "<b>Not well placed</b>" htmlstr || T.isInfixOf "<strong>Not well placed</strong>" htmlstr
             then NotWellPlaced
             else NoRating
-  pure $ Ranked id_ s rank
+  pure $ Ranked id_ s rank u
 
 
 

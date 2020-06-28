@@ -88,6 +88,7 @@ data Ranked = Ranked
   { rankedId   :: String
   , rankedDate :: String
   , rankedRank :: Ranking
+  , rankedUrl  :: T.Text
   } deriving (Show, Eq, Generic)
 
 instance ToNamedRecord Ranked
