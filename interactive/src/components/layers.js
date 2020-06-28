@@ -28,7 +28,7 @@ export const clusterCountLayer = {
   }
 };
 
-export const unclusteredPointLayer = layer => {
+export const unclusteredPointLayer = (layer, selected, hover) => {
   return {
   id: 'unclustered-point',
   type: 'circle',
@@ -39,9 +39,12 @@ export const unclusteredPointLayer = layer => {
     // ,'#bae4bc','#7bccc4','#43a2ca','#0868ac']
      ['step', ['get', 'ero'], '#eceece', 1, '#0868ac',2,'#43a2ca',3,'#7bccc4',4,'#bae4bc',5,'#8856a7',6,'#fdcc8a'] :
      ['step', ['get', 'type'], '#eceece', 1, '#e41a1c',2,'#377eb8',3,'#4daf4a',4,'#984ea3',5,'#ff7f00',6,'#f781bf'],
-    'circle-radius': ['interpolate', ['linear'], ['get', 'total_roll'], 1, 4, 100, 14, 200, Math.sqrt(200) + 4],
-    'circle-stroke-width': 1,
-    'circle-stroke-color': '#fff'
+    'circle-radius': ['interpolate', ['linear'], ['get', 'total_roll'], 1, 8, 100, 18, 200, Math.sqrt(200) + 8],
+    'circle-stroke-width': 2,
+    'circle-stroke-color': ['case', 
+    ['==', ['get', 'number'], selected], '#121617', 
+    ['==', ['get', 'number'], hover], '#808285', 
+    '#fff']
   }
 }
 };

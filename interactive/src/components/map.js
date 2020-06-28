@@ -26,10 +26,11 @@ const initialviewport = {
 };
 
 export default () => {
-  const { layer } = useSelector(({state}) => state)
+  const { layer, selected } = useSelector(({state}) => state)
   const dispatch = useDispatch();
   const [viewport, setViewport] = useState(initialviewport);
   const [zoomlevel, setZoomlevel] = useState(ZOOM_FAR);
+  const [hover, setHover] = useState(-1)
   const flyToViewport = (longitude, latitude, zoom) =>
     setViewport({
       ...viewport,
@@ -81,6 +82,29 @@ export default () => {
     }
   };
 
+  const hoverHandler = event => {
+    const { features } = event;
+    if (typeof features == "undefined") {
+      return
+    }
+    const sel = features.filter(
+      ({ layer }) => layer.id === "unclustered-point"
+    );
+    if (sel.length > 0) {
+      setHover(sel[0].properties.number)
+    }
+    else if (hover !== -1) {
+      setHover(-1)
+    }
+  }
+
+  const getCursor = ({isDragging}) => {
+    if (isDragging) {
+      return "grabbing"
+    }
+    return hover !== -1 ? 'pointer' : 'grab';
+  }
+
   return (
     <>
       <ReactMapGL
@@ -89,6 +113,8 @@ export default () => {
         height="380px"
         onViewportChange={setViewport}
         onClick={clickHandler}
+        onHover={hoverHandler}
+        getCursor={getCursor}
         mapStyle="mapbox://styles/nzherald/ckbvt9no60gvk1ipone676rf6"
         mapboxApiAccessToken={MAPBOX_TOKEN}
       >
@@ -101,7 +127,7 @@ export default () => {
         >
           <Layer {...clusterLayer} />
           <Layer {...clusterCountLayer} />
-          <Layer {...unclusteredPointLayer(layer)} />
+          <Layer {...unclusteredPointLayer(layer, +selected || -1, hover)} />
         </Source>
       </ReactMapGL>
       <Nav go={flyToViewport} />

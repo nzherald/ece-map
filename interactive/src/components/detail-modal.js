@@ -73,7 +73,7 @@ const Rolls = styled.div`
   flex-direction: row;
   flex-wrap: wrap;
   width: 100%;
-  margin: 20px 0;
+  margin: 10px 0;
 `;
 
 const TotalRoll = styled.div`
@@ -167,11 +167,11 @@ export default () => {
       <Body>
         <Rolls>
           <TotalRoll type={type_idx}>
-            <RollNum>{total_roll || "?"}</RollNum>
+            <RollNum>{typeof total_roll === "undefined" ? "?" : total_roll}</RollNum>
             <div>Total Roll</div>
           </TotalRoll>
           <Under2Roll type={type_idx}>
-            <RollNum>{under_2s || "?"}</RollNum>
+            <RollNum>{typeof under_2s === "undefined" ? "?" : under_2s}</RollNum>
             <div>Under 2s</div>
           </Under2Roll>
           <Address>

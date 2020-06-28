@@ -34,7 +34,7 @@ const Title = styled.h2`
 
 export default () => {
   const dispatch = useDispatch()
-  const { zoomLevel } = useSelector((state) => state.map);
+  const { zoomLevel } = useSelector(({state}) => state);
 
   useEffect(() => {
     const fetchData = async (url, action) => {

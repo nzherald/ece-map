@@ -8,7 +8,6 @@ import { ZOOM_FAR, LAYER_RATING, LAYER_TYPE } from "../constants";
 import { CHANGE_LAYER } from "../redux/actions";
 
 const Footer = styled.div`
-  min-height: 200px;
 `;
 
 const Instructions = styled.div`
@@ -66,8 +65,7 @@ margin-top: 8px;
 
 export default () => {
   const dispatch = useDispatch();
-  const { zoomLevel } = useSelector((state) => state.map);
-  const { layer } = useSelector(({ state }) => state);
+  const { layer, zoomLevel } = useSelector(({ state }) => state);
 
   return (
     <Footer>

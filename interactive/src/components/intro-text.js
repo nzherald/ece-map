@@ -13,13 +13,16 @@ background-color: white;
 box-shadow: 1px 1px 2px 0px rgba(0,0,0,0.75);
 transition: opacity 700ms ease-in-out;
 opacity: ${props => props.opacity};
+div {
+    margin: 12px 0;
+}
 `
 
 export default ({opacity}) => {
     return (
         <Intro opacity={opacity}>
-            <p>This interactive map shows most ECE centres in NZ</p>
-            <p>Zoom in and click to find details of centres in your area, including roll size and ERO reports.</p>
+            <div>This interactive map shows most ECE centres in NZ</div>
+            <div>Zoom in and click to find details of centres in your area, including roll size and ERO reports.</div>
         </Intro>
     );
 }

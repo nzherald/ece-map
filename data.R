@@ -8,7 +8,7 @@ rank <- read_csv("data/ranked-schools.csv")
 schools <- read_csv("data/Directory-ECE-Current.clean.csv",
                     col_types = cols(
                       .default = col_character(),
-                      number = col_character(),
+                      number = col_integer(),
                       community_of_learning_id = col_double(),
                       longitude = col_double(),
                       latitude = col_double(),
@@ -35,7 +35,7 @@ rated <- schools %>%
   ungroup() %>%
   filter(row == 1) %>%
   select(-row) %>%
-  mutate(number=as.character(rankedId)), by=c("number"))
+  mutate(number=as.integer(rankedId)), by=c("number"))
 
 sorted <- rated %>%
   filter(institution_type != "Casual-Education and Care", 
