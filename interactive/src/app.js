@@ -14,7 +14,6 @@ const DetailModal = React.lazy(() => import("./components/detail-modal"))
 
 const App = styled.div`
   background-color: #efeeeb;
-  margin-bottom: 30px;
 `;
 
 const MapWrap = styled.div`
@@ -36,7 +35,8 @@ const Credit = styled.div`
 display: flex;
 flex-wrap: wrap;
 justify-content: space-between;
-padding: 0 6px;
+padding: 12px 0 0;
+background-color: white;
 div {
   margin-bottom: 5px;
 }
