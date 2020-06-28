@@ -32,6 +32,22 @@ const Title = styled.h2`
   }
 `;
 
+const Credit = styled.div`
+display: flex;
+flex-wrap: wrap;
+justify-content: space-between;
+padding: 0 6px;
+div {
+  margin-bottom: 5px;
+}
+a, div {
+  font-family: 'Stag Book';
+  color: #596465;
+  font-size: 15px;
+}
+
+`
+
 export default () => {
   const dispatch = useDispatch()
   const { zoomLevel } = useSelector(({state}) => state);
@@ -59,6 +75,10 @@ export default () => {
           <DetailModal />
         </MapWrap>
       </Suspense>
+      <Credit>
+        <div style={{marginRight: "3px"}}>Interactive: <a href="https://www.nzherald.co.nz/author/chris-knox/">Chris Knox</a></div>
+        <div>Data: Ministry of Education, Education Review Office</div>
+      </Credit>
     </App>
   );
 };

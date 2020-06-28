@@ -30,9 +30,10 @@ const Heading = styled.div`
   background-color: ${(props) => colors[props.type - 1]};
   color: white;
   margin: 0;
-  padding: 6px 36px 12px 10px;
+  padding: 6px 10px;
   h2 {
   color: white;
+  padding-right: 30px;
     font-family: "Stag Book";
     margin: 2px 0 8px;
   }
@@ -81,7 +82,7 @@ const TotalRoll = styled.div`
   border-radius: 8px;
   margin: 10px 10px 20px;
   padding: 12px 18px;
-  min-width: 160px;
+  min-width: 140px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -96,7 +97,7 @@ const Under2Roll = styled.div`
   border-radius: 8px;
   margin: 10px 10px 20px;
   padding: 12px 18px;
-  min-width: 160px;
+  min-width: 140px;
   display: flex;
   justify-content: center;
   align-items: center;
