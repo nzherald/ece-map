@@ -14,7 +14,7 @@ const DetailModal = React.lazy(() => import("./components/detail-modal"))
 
 const App = styled.div`
   background-color: #efeeeb;
-  padding-bottom: 12px;
+  margin-bottom: 30px;
 `;
 
 const MapWrap = styled.div`
@@ -27,6 +27,9 @@ const Title = styled.h2`
   margin: 0;
   padding: 16px 0 12px;
   text-align: center;
+  @media (max-width:500px) {
+    font-size: 19px;
+  }
 `;
 
 export default () => {
@@ -47,7 +50,7 @@ export default () => {
 
   return (
     <App>
-      <Title>Find the best early childhood education centre for you</Title>
+      <Title>Find an early childhood education centre</Title>
       <Suspense fallback="loading...">
         <MapWrap>
           <IntroText opacity={zoomLevel === ZOOM_FAR ? 1 : 0} />

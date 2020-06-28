@@ -1,6 +1,6 @@
-import React, { Suspense, useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import ReactMapGL, { Source, Layer, FlyToInterpolator } from "react-map-gl";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import "mapbox-gl/dist/mapbox-gl.css";
 
 import { ZOOMLEVEL, SELECT } from "../redux/actions";
@@ -26,6 +26,7 @@ const initialviewport = {
 };
 
 export default () => {
+  const { layer } = useSelector(({state}) => state)
   const dispatch = useDispatch();
   const [viewport, setViewport] = useState(initialviewport);
   const [zoomlevel, setZoomlevel] = useState(ZOOM_FAR);
@@ -85,7 +86,7 @@ export default () => {
       <ReactMapGL
         {...viewport}
         width="100%"
-        height="440px"
+        height="380px"
         onViewportChange={setViewport}
         onClick={clickHandler}
         mapStyle="mapbox://styles/nzherald/ckbvt9no60gvk1ipone676rf6"
@@ -100,7 +101,7 @@ export default () => {
         >
           <Layer {...clusterLayer} />
           <Layer {...clusterCountLayer} />
-          <Layer {...unclusteredPointLayer} />
+          <Layer {...unclusteredPointLayer(layer)} />
         </Source>
       </ReactMapGL>
       <Nav go={flyToViewport} />

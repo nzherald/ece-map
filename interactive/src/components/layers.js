@@ -1,3 +1,5 @@
+import { LAYER_RATING } from "../constants";
+
 export const clusterLayer = {
   id: 'clusters',
   type: 'circle',
@@ -26,15 +28,20 @@ export const clusterCountLayer = {
   }
 };
 
-export const unclusteredPointLayer = {
+export const unclusteredPointLayer = layer => {
+  return {
   id: 'unclustered-point',
   type: 'circle',
   source: 'earthquakes',
   filter: ['!', ['has', 'point_count']],
   paint: {
-    'circle-color': ['step', ['get', 'type'], '#eceece', 1, '#e41a1c',2,'#377eb8',3,'#4daf4a',4,'#984ea3',5,'#ff7f00',6,'#f781bf'],
+    'circle-color': layer === LAYER_RATING ?
+    // ,'#bae4bc','#7bccc4','#43a2ca','#0868ac']
+     ['step', ['get', 'ero'], '#eceece', 1, '#0868ac',2,'#43a2ca',3,'#7bccc4',4,'#bae4bc',5,'#8856a7',6,'#fdcc8a'] :
+     ['step', ['get', 'type'], '#eceece', 1, '#e41a1c',2,'#377eb8',3,'#4daf4a',4,'#984ea3',5,'#ff7f00',6,'#f781bf'],
     'circle-radius': ['interpolate', ['linear'], ['get', 'total_roll'], 1, 4, 100, 14, 200, Math.sqrt(200) + 4],
     'circle-stroke-width': 1,
     'circle-stroke-color': '#fff'
   }
+}
 };

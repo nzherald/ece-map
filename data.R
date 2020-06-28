@@ -1,6 +1,7 @@
 library(tidyverse)
 library(r2d3)
 library(jsonlite)
+library(forcats)
 
 
 rank <- read_csv("data/ranked-schools.csv")
@@ -43,13 +44,23 @@ sorted <- rated %>%
     institution_type == "Education and Care Service" & authority == "Community based" ~ "Education and Care\nCommunity based",
     institution_type == "Education and Care Service" & authority == "Privately owned" ~ "Education and Care\nPrivately owned",
     TRUE ~ institution_type
-  ))
+  ),
+  rank=as_factor(coalesce(str_to_sentence(rankedRank), "Report unavailable")),
+  rank=fct_relevel(rank, c(
+    "Very well placed",
+    "Well placed",
+    "Needs further development",
+    "Not well placed",
+    "No rating",
+    "Report unavailable"
+  )),
+  ero = coalesce(as.numeric(as.factor(rank)),6)
+  )
 
 geodata <- sorted %>%
-  select(number, ero=rankedRank, latitude, longitude, total_roll, type) %>%
+  select(number, ero, latitude, longitude, total_roll, type) %>%
   filter(!is.na(latitude), !is.na(longitude)) %>%
-  mutate(ero = coalesce(as.numeric(as.factor(ero)),6),
-         type = as.numeric(as.factor(type)) ) %>%
+  mutate(type = as.numeric(as.factor(type)) ) %>%
   sf::st_as_sf(coords = c("longitude","latitude"))
 
 geodata %>% sf::st_write("interactive/src/assets/ece.geojson", delete_dsn=T)
@@ -61,9 +72,8 @@ sorted %>%
   jsonlite::write_json("interactive/src/types.json", auto_unbox=T)
 
 sorted %>%
-  rename(rank=rankedRank) %>%
-  mutate(ero = coalesce(as.numeric(as.factor(rank)),6)) %>%
-  count(rank, ero) %>%
+  count(y=rank, color=ero, name="x") %>%
+  arrange(desc(color)) %>%
   jsonlite::write_json("interactive/src/rating.json", auto_unbox=T)
 
 sorted %>%
@@ -72,7 +82,7 @@ sorted %>%
          rankedDate = format(as.Date(rankedDate), "%d %B, %Y")
          ) %>%
   select(number, name, type=institution_type, type_idx, authority, street,
-         suburb, town_city, definition, rating=rankedRank, erolink=rankedUrl,
+         suburb, town_city, definition, rating=rank, erolink=rankedUrl,
          erodate=rankedDate, total_roll, under_2s
          ) %>%
   split(.$number) %>%

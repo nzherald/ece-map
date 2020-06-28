@@ -1,3 +1,4 @@
+
 import React from "react";
 import styled from "styled-components"
 import {
@@ -8,7 +9,7 @@ import {
   HorizontalBarSeries,
 } from "react-vis";
 
-import typeData from "../types.json"
+import ratingData from "../rating.json"
 
 const Chart = styled.div`
 padding: 0 6px;
@@ -34,8 +35,9 @@ const formatTypes = tick => {
 }
 
 const xOffsets = {
-    0: -10,
-    5: -32
+    0: 5,
+    4: -22,
+    1: -30
 }
 
 const yOffsets = {
@@ -47,22 +49,22 @@ const yOffsets = {
 export default () => {
   return (
     <Chart>
-        <h3>Types of ECE centres in NZ</h3>
+        <h3>ERO Ratings of NZ ECE centres</h3>
       <XYPlot width={Math.min(600, window.innerWidth - 40)} height={220} yType="ordinal"
-      margin={{left: 148, right: 0, top: 0, bottom: 13}}
+      margin={{left: 198, right: 0, top: 0, bottom: 13}}
       colorScale={"category"}
       colorDomain={[1,2,3,4,5,6]}
-      colorRange={[ '#e41a1c','#377eb8','#4daf4a','#984ea3','#ff7f00','#f781bf' ]}
+      colorRange={[ '#0868ac','#43a2ca','#7bccc4','#bae4bc','#8856a7','#fdcc8a']}
       >
           <YAxis tickFormat={formatTypes} />
         <HorizontalBarSeries
-          data={typeData}
+          data={ratingData}
         />
         <LabelSeries 
-        data={typeData.map((d,i) => {
+        data={ratingData.map((d,i) => {
             d.label = `${d.x}`
             d.yOffset = yOffsets[i] || 10
-            d.xOffset = xOffsets[i] || -30
+            d.xOffset = xOffsets[i] || 5
             return d
             })}
              />
