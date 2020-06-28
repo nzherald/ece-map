@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import ReactMapGL, { Source, Layer, FlyToInterpolator } from "react-map-gl";
 import { useDispatch, useSelector } from "react-redux";
+import styled from "styled-components";
 import "mapbox-gl/dist/mapbox-gl.css";
 
 import { ZOOMLEVEL, SELECT } from "../redux/actions";
@@ -14,7 +15,6 @@ import {
 } from "./layers";
 import ece from "../assets/ece.geojson";
 
-
 const MAPBOX_TOKEN = process.env.MAPBOX_TOKEN;
 
 const initialviewport = {
@@ -25,12 +25,31 @@ const initialviewport = {
   pitch: 0,
 };
 
+const Automate = styled.div`
+  margin-top: 50px;
+`;
+
+const Buttons = styled.div`
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  position: absolute;
+  left: -120px;
+  top: 60px;
+  width: 100px;
+`;
+
+const Pos = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;
+
 export default () => {
-  const { layer, selected } = useSelector(({state}) => state)
+  const { layer, selected } = useSelector(({ state }) => state);
   const dispatch = useDispatch();
   const [viewport, setViewport] = useState(initialviewport);
   const [zoomlevel, setZoomlevel] = useState(ZOOM_FAR);
-  const [hover, setHover] = useState(-1)
+  const [hover, setHover] = useState(-1);
   const flyToViewport = (longitude, latitude, zoom) =>
     setViewport({
       ...viewport,
@@ -82,28 +101,27 @@ export default () => {
     }
   };
 
-  const hoverHandler = event => {
+  const hoverHandler = (event) => {
     const { features } = event;
     if (typeof features == "undefined") {
-      return
+      return;
     }
     const sel = features.filter(
       ({ layer }) => layer.id === "unclustered-point"
     );
     if (sel.length > 0) {
-      setHover(sel[0].properties.number)
+      setHover(sel[0].properties.number);
+    } else if (hover !== -1) {
+      setHover(-1);
     }
-    else if (hover !== -1) {
-      setHover(-1)
-    }
-  }
+  };
 
-  const getCursor = ({isDragging}) => {
+  const getCursor = ({ isDragging }) => {
     if (isDragging) {
-      return "grabbing"
+      return "grabbing";
     }
-    return hover !== -1 ? 'pointer' : 'grab';
-  }
+    return hover !== -1 ? "pointer" : "grab";
+  };
 
   return (
     <>
@@ -131,6 +149,72 @@ export default () => {
         </Source>
       </ReactMapGL>
       <Nav go={flyToViewport} />
+      <Automate>
+        
+        <Buttons>
+          <button
+            onClick={() =>
+              setViewport({
+                ...viewport,
+                latitude: -41.291836,
+                longitude: 174.776386,
+                zoom: 13.631,
+                transitionInterpolator: new FlyToInterpolator({ speed: 1.2 }),
+                transitionDuration: "auto",
+              })
+            }
+          >
+            Fly to Wellington
+          </button>
+          <button onClick={() => dispatch({ type: SELECT, payload: 60346 })}>
+            Capital City Preschool
+          </button>
+          <button
+            onClick={() => {
+              dispatch({ type: SELECT, payload: null });
+              setViewport({
+                ...viewport,
+                latitude: -36.872575,
+                longitude: 174.63529,
+                zoom: 12.52538,
+                transitionInterpolator: new FlyToInterpolator({ speed: 1.2 }),
+                transitionDuration: "auto",
+              });
+            }}
+          >
+            Fly to Auckland
+          </button>
+          <button onClick={() => dispatch({ type: SELECT, payload: 5054 })}>
+            Henderson Kindergarten
+          </button>
+          <button
+            onClick={() => {
+              dispatch({ type: SELECT, payload: null });
+              setViewport({
+                ...viewport,
+                latitude: -45.24561,
+                longitude: 169.39844,
+                zoom: 13.325520,
+                transitionInterpolator: new FlyToInterpolator({ speed: 1.2 }),
+                transitionDuration: "auto",
+              });
+            }}
+          >
+            Fly to Alex
+          </button>
+          <button onClick={() => dispatch({ type: SELECT, payload: 45256 })}>
+            BestStart Alexandra
+          </button>
+        </Buttons>
+      </Automate>
     </>
   );
 };
+
+/*
+<Pos>
+          <div>Latitude: {viewport.latitude}</div>
+          <div>Longitude: {viewport.longitude}</div>
+          <div>Zoom: {viewport.zoom}</div>
+        </Pos>
+        */
