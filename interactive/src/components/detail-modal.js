@@ -8,7 +8,7 @@ const Details = styled.div`
   top: 381px;
   z-index: 2;
   left: 0;
-  right: 0;
+  right: 1px;
   bottom: 0;
   background-color: white;
   box-shadow: 1px 1px 2px 0px rgba(0, 0, 0, 0.75);
