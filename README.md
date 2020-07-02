@@ -3,6 +3,9 @@
 This repository contains the source code and data used by the _New Zealand Herald_ to create an interactive map of (almost) all Early Childhood Education centres in New Zealand. This map was used in the [_Choosing Childcare_](https://www.nzherald.co.nz/choosing-childcare/tags/1504924/) series - 
 [for example (paywalled)](https://www.nzherald.co.nz/nz/news/article.cfm?c_id=1&objectid=12314559)
 
+
+![Map Preview](assets/ECE_map.gif)
+
 The basis of the map is the [ECE Directory](https://www.educationcounts.govt.nz/data-services/directories/early-childhood-services) 
 data provided by the Ministry of Education on the education counts site.
 
