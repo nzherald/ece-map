@@ -24,15 +24,16 @@ where XXXX is your mapbox token.
 Then from the `interactive` directory run `npm install` and then `npm run start`. This will open the map
 in your browser.
 
+The interative itself is a [react](https://reactjs.org/) app that uses [react-map-gl](http://visgl.github.io/react-map-gl/) as an interface to [mapbox](https://www.mapbox.com/)
+
 ## Data refresh
 
 If you wish to recreate the ERO ratings data you will need working [haskell](https://www.haskell.org/) and [R](https://www.r-project.org/) environments.
 
 - Download a fresh copy of the [ECE Directory] as CSV to `data/Directory-ECE-Current.csv`
-- Open an R shell and run
+- Open an R shell (this will automatically download and install renv) and run
 
 ```r
-install.packages("renv")
 renv::restore()
 ```
 
@@ -50,7 +51,8 @@ The haskell build uses [shake](https://shakebuild.com/) to manage the process - 
 
 ## Copyright
 
-The source code in this repository has been released until the MIT license by the New Zealand Herald.
+The source code in this repository has been released until the MIT license by the _New Zealand Herald_.
+The _New Zealand Herald_ has placed no restrictions on how you use our code - although if you do it would be great if you could let us know. If you have any questions please don't hesitate to contact Chris Knox either at chris.knox@nzherald.co.nz or https://twitter.com/vizowl 
 
 All data in the repository was released under various creative commons licenses and retain their original ownership.
 
