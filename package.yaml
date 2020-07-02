@@ -3,7 +3,7 @@ version:             0.1.0.0
 #synopsis:
 #description:
 homepage:            https://github.com/nzherald/ece-map#readme
-license:             BSD3
+license:             MIT
 author:              Chris Knox
 maintainer:          chris.knox@nzherald.co.nz
 copyright:           2020 NZ Herald 

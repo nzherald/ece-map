@@ -6,7 +6,7 @@ module Types where
 
 import           Cases
 import           Data.Csv
-import qualified Data.Text    as T
+import qualified Data.Text                     as T
 import           GHC.Generics
 
 
@@ -24,7 +24,13 @@ data School = School
   } deriving (Show, Eq, Generic)
 
 schoolOptions :: Options
-schoolOptions = defaultOptions { fieldLabelModifier = T.unpack . T.replace "2_s" "2s" . snakify . T.replace "school" "" . T.pack }
+schoolOptions = defaultOptions
+  { fieldLabelModifier = T.unpack
+                         . T.replace "2_s" "2s"
+                         . snakify
+                         . T.replace "school" ""
+                         . T.pack
+  }
 
 instance ToNamedRecord School where
   toNamedRecord = genericToNamedRecord schoolOptions
@@ -43,7 +49,9 @@ data ReportLink = ReportLink
 
 
 reportLinkOptions :: Options
-reportLinkOptions = defaultOptions { fieldLabelModifier = T.unpack . snakify . T.replace "reportLink" "" . T.pack }
+reportLinkOptions = defaultOptions
+  { fieldLabelModifier = T.unpack . snakify . T.replace "reportLink" "" . T.pack
+  }
 
 instance ToNamedRecord ReportLink where
   toNamedRecord = genericToNamedRecord reportLinkOptions
@@ -62,8 +70,8 @@ data Missing
 
 instance ToField Missing
   where
-    toField Report  = "report"
-    toField Summary = "summary"
+  toField Report  = "report"
+  toField Summary = "summary"
 
 
 data Ranking
@@ -77,12 +85,12 @@ data Ranking
 
 instance ToField Ranking
   where
-    toField VeryWellPlaced     = "very well placed"
-    toField WellPlaced         = "well placed"
-    toField FurtherDevelopment = "needs further development"
-    toField NotWellPlaced      = "not well placed"
-    toField NoRating           = "no rating"
-    toField (Problem s)        = toField s
+  toField VeryWellPlaced     = "very well placed"
+  toField WellPlaced         = "well placed"
+  toField FurtherDevelopment = "needs further development"
+  toField NotWellPlaced      = "not well placed"
+  toField NoRating           = "no rating"
+  toField (Problem s)        = toField s
 
 data Ranked = Ranked
   { rankedId   :: String
@@ -92,7 +100,9 @@ data Ranked = Ranked
   } deriving (Show, Eq, Generic)
 
 instance ToNamedRecord Ranked
-  where toNamedRecord = genericToNamedRecord defaultOptions
+  where
+  toNamedRecord = genericToNamedRecord defaultOptions
 instance DefaultOrdered Ranked
-  where headerOrder = genericHeaderOrder defaultOptions
+  where
+  headerOrder = genericHeaderOrder defaultOptions
 

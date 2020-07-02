@@ -3,7 +3,8 @@ module Lib
   , module EroReports
   , module Types
   , module EroRank
-  ) where
+  )
+where
 
 import           Directory
 import           EroRank

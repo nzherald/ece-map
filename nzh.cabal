@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 94229c5fdcb61cf35d086ee8f5b0c3ed7cf0e24db7fc9a0f6e85548d8d20d555
+-- hash: ca349f88470406a610abd61231073d790a3c87897118131a4439d8252a35829d
 
 name:           nzh
 version:        0.1.0.0
@@ -13,7 +13,7 @@ homepage:       https://github.com/nzherald/ece-map#readme
 author:         Chris Knox
 maintainer:     chris.knox@nzherald.co.nz
 copyright:      2020 NZ Herald
-license:        BSD3
+license:        MIT
 license-file:   LICENSE
 build-type:     Simple
 extra-source-files:
@@ -26,7 +26,6 @@ library
       EroRank
       EroReports
       Lib
-      Options
       Types
   other-modules:
       Paths_nzh

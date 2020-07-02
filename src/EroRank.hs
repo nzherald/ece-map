@@ -5,15 +5,18 @@
 {-# LANGUAGE OverloadedStrings   #-}
 {-# LANGUAGE ScopedTypeVariables #-}
 
-module EroRank (ranks) where
+module EroRank
+  ( ranks
+  )
+where
 
-import qualified Control.Monad.Parallel as P
-import qualified Data.ByteString.Lazy   as BL
-import qualified Data.Csv               as Csv
-import           Data.Text              (Text)
-import qualified Data.Text              as T
-import qualified Data.Text.IO           as T
-import qualified Data.Vector            as V
+import qualified Control.Monad.Parallel        as P
+import qualified Data.ByteString.Lazy          as BL
+import qualified Data.Csv                      as Csv
+import           Data.Text                                ( Text )
+import qualified Data.Text                     as T
+import qualified Data.Text.IO                  as T
+import qualified Data.Vector                   as V
 import           GHC.Generics
 import           System.FilePath
 
@@ -25,7 +28,7 @@ import           Types
 ranks :: FilePath -> FilePath -> IO ()
 ranks outfile fp = do
   (Right (_, sch)) <- Csv.decodeByName <$> BL.readFile fp
-  r <- mapM readRating (V.toList sch)
+  r                <- mapM readRating (V.toList sch)
   BL.writeFile "data/ranked-schools.csv" $ Csv.encodeDefaultOrderedByName r
 
 
@@ -34,15 +37,29 @@ readRating :: ReportLink -> IO Ranked
 readRating (ReportLink id_ s u) = do
   print $ id_ ++ " " ++ s
   htmlstr <- T.readFile $ "data" </> "reports" </> id_ </> s -<.> "html"
-  let rank = if T.isInfixOf "<b>Very well placed</b>" htmlstr || T.isInfixOf "<strong>Very well placed</strong>" htmlstr
-            then VeryWellPlaced
-            else if T.isInfixOf "<b>Well placed</b>" htmlstr || T.isInfixOf "<strong>Well placed</strong>" htmlstr
-            then WellPlaced
-            else if T.isInfixOf "<b>Requires further development</b>" htmlstr ||T.isInfixOf "<strong>Requires further development</strong>" htmlstr
-            then FurtherDevelopment
-            else if T.isInfixOf "<b>Not well placed</b>" htmlstr || T.isInfixOf "<strong>Not well placed</strong>" htmlstr
-            then NotWellPlaced
-            else NoRating
+  let
+    rank =
+      if T.isInfixOf "<b>Very well placed</b>" htmlstr
+         || T.isInfixOf "<strong>Very well placed</strong>" htmlstr
+      then
+        VeryWellPlaced
+      else
+        if T.isInfixOf "<b>Well placed</b>" htmlstr
+           || T.isInfixOf "<strong>Well placed</strong>" htmlstr
+        then
+          WellPlaced
+        else
+          if T.isInfixOf "<b>Requires further development</b>" htmlstr
+             || T.isInfixOf
+                  "<strong>Requires further development</strong>"
+                  htmlstr
+          then
+            FurtherDevelopment
+          else
+            if T.isInfixOf "<b>Not well placed</b>" htmlstr
+                 || T.isInfixOf "<strong>Not well placed</strong>" htmlstr
+              then NotWellPlaced
+              else NoRating
   pure $ Ranked id_ s rank u
 
 

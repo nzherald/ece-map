@@ -17,5 +17,4 @@ aws s3 cp --recursive \
   --cache-control max-age=60,public \
   --exclude "*" \
   --include "embed.*" \
-  --include "*.html" \
   dist/ $s3bucket
