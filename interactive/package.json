@@ -33,7 +33,7 @@
     "@babel/preset-react": "^7.10.1",
     "@babel/runtime": "^7.10.3",
     "autoprefixer": "^9.8.4",
-    "aws-sdk": "^2.704.0",
+    "aws-sdk": "^2.814.0",
     "babel-loader": "^8.1.0",
     "copy-webpack-plugin": "^6.0.2",
     "cross-env": "^7.0.2",
